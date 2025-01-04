@@ -1,4 +1,3 @@
-import React from "react"
 import "../css/RegisterPage.css"
 import TextField from "@mui/material/TextField"
 import InputAdornment from "@mui/material/InputAdornment"
@@ -6,7 +5,7 @@ import { MdAccountCircle } from "react-icons/md"
 import { FaLock } from "react-icons/fa"
 import { Button } from "@mui/material"
 import { useFormik } from "formik"
-import { registerPageSchema } from "../schemas/RegisterPageSchema"
+import { authenticationPageSchema } from "../schemas/AuthenticationPageSchema"
 import registerPageService from "../services/RegisterPageService"
 import { UserType } from "../types/Types"
 import { toast } from "react-toastify"
@@ -22,11 +21,11 @@ export const RegisterPage = () => {
       }
       const response = await registerPageService.register(payload)
       if (response) {
-        toast.success("Kayıt Başarılı")
+        toast.success("Register Successful")
         navigate("/login")
       }
     } catch (error) {
-      toast.error("Kayıt Başarısız")
+      toast.error("Register Failed")
     }
   }
 
@@ -35,7 +34,7 @@ export const RegisterPage = () => {
       username: "",
       password: "",
     },
-    validationSchema: registerPageSchema,
+    validationSchema: authenticationPageSchema,
     onSubmit: submit,
   })
 
@@ -89,10 +88,10 @@ export const RegisterPage = () => {
             </div>
             <div className='register-form-buttons'>
               <Button type='submit' sx={{ textTransform: "none" }} size='small' color='info' variant='contained'>
-                Kaydol
+                Register
               </Button>
               <Button onClick={clear} sx={{ textTransform: "none" }} size='small' color='warning' variant='outlined'>
-                Temizle
+                Clear
               </Button>
             </div>
           </div>
