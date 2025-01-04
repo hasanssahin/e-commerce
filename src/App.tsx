@@ -1,3 +1,9 @@
+import { RouterConfig } from "./config/RouterConfig"
+
 export default function App() {
-  return <div>App</div>
+  return (
+    <div>
+      <RouterConfig />
+    </div>
+  )
 }
