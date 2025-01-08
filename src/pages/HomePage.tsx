@@ -6,6 +6,7 @@ import productService from "../services/ProductService"
 import { toast } from "react-toastify"
 import { RootState } from "../redux/store"
 import { ProductCard } from "../components/ProductCard"
+import { Navbar } from "../components/Navbar"
 
 export const HomePage = () => {
   const dispatch = useDispatch()
@@ -37,8 +38,11 @@ export const HomePage = () => {
     }
   }, [])
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "30px", margin: "50px 30px" }}>
-      {products && products.map((product: ProductType, index: number) => <ProductCard key={index} product={product} />)}
-    </div>
+    <>
+      <Navbar />
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "30px", margin: "50px 30px" }}>
+        {products && products.map((product: ProductType, index: number) => <ProductCard key={index} product={product} />)}
+      </div>
+    </>
   )
 }
