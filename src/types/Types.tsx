@@ -1,9 +1,10 @@
 export interface UserType {
   username: string
   password: string
+  balance: number
 }
 
-export interface AuthenticationResponse {
-  accessToken: string
-  refreshToken: string
+export interface LoginType {
+  username: string
+  password: string
 }
