@@ -2,3 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.css-19opgx6-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 14px;
+}

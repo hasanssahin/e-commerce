@@ -7,6 +7,8 @@ import { toast } from "react-toastify"
 import { RootState } from "../redux/store"
 import { ProductCard } from "../components/ProductCard"
 import { Navbar } from "../components/Navbar"
+import { Category } from "../components/Category"
+import { Container } from "@mui/material"
 
 export const HomePage = () => {
   const dispatch = useDispatch()
@@ -40,8 +42,13 @@ export const HomePage = () => {
   return (
     <>
       <Navbar />
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "30px", margin: "50px 30px" }}>
-        {products && products.map((product: ProductType, index: number) => <ProductCard key={index} product={product} />)}
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start", justifyContent: "center" }}>
+        <Category />
+        <Container maxWidth='xl'>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", alignItems: "center", gap: "30px", margin: "50px 30px" }}>
+            {products && products.map((product: ProductType, index: number) => <ProductCard key={index} product={product} />)}
+          </div>
+        </Container>
       </div>
     </>
   )
