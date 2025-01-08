@@ -7,26 +7,37 @@ import { FaLock } from "react-icons/fa"
 import { Button } from "@mui/material"
 import { useFormik } from "formik"
 import { authenticationPageSchema } from "../schemas/AuthenticationPageSchema"
-import { UserType } from "../types/Types"
 import { toast } from "react-toastify"
 import loginPageService from "../services/LoginPageService"
 import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setCurrentUser, setLoading } from "../redux/appSlice"
+import { LoginType, UserType } from "../types/Types"
 
 export const LoginPage = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const submit = async (values: any, actions: any) => {
     try {
-      const payload: UserType = {
+      dispatch(setLoading(true))
+      const payload: LoginType = {
         username: values.username,
         password: values.password,
       }
-      const response = await loginPageService.login(payload)
+      const response: UserType = await loginPageService.login(payload)
       if (response) {
         toast.success("Login Successful")
+        dispatch(setCurrentUser(response))
+        localStorage.setItem("currentUser", JSON.stringify(response))
         navigate("/")
+      } else {
+        toast.error("Login Failed")
       }
     } catch (error) {
       toast.error("Login Failed")
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 

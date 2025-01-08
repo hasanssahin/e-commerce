@@ -7,9 +7,9 @@ import { Button } from "@mui/material"
 import { useFormik } from "formik"
 import { authenticationPageSchema } from "../schemas/AuthenticationPageSchema"
 import registerPageService from "../services/RegisterPageService"
-import { UserType } from "../types/Types"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
+import { UserType } from "../types/Types"
 
 export const RegisterPage = () => {
   const navigate = useNavigate()
@@ -18,6 +18,7 @@ export const RegisterPage = () => {
       const payload: UserType = {
         username: values.username,
         password: values.password,
+        balance: 1000,
       }
       const response = await registerPageService.register(payload)
       if (response) {
