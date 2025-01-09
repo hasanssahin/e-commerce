@@ -7,16 +7,14 @@ import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import MagaraIcon from "../images/magara.png"
 import { useNavigate } from "react-router-dom"
-import { InputAdornment } from "@mui/material"
+import { Badge, InputAdornment } from "@mui/material"
 import { FaSearch } from "react-icons/fa"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { filterProducts, setCurrentUser, setProducts } from "../redux/appSlice"
 import { toast } from "react-toastify"
-import { RootState } from "../redux/store"
 import productService from "../services/ProductService"
-import { AxiosResponse } from "axios"
 import { ProductType } from "../types/Types"
-
+import { FaShoppingBasket } from "react-icons/fa"
 export const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -69,6 +67,11 @@ export const Navbar = () => {
             }}
             variant='standard'
           />
+
+          <Badge badgeContent={5} style={{ marginLeft: "20px", color: "#deccc1" }}>
+            <FaShoppingBasket color='#deccc1' style={{ fontSize: "20px" }} />
+          </Badge>
+
           <Button sx={{ textTransform: "none", marginLeft: "20px", color: "#deccc1" }} color='inherit' onClick={logout}>
             Çıkış yap
           </Button>
