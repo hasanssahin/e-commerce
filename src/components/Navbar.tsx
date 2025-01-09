@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ChangeEvent } from "react"
 import AppBar from "@mui/material/AppBar"
 import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
@@ -9,18 +9,37 @@ import MagaraIcon from "../images/magara.png"
 import { useNavigate } from "react-router-dom"
 import { InputAdornment } from "@mui/material"
 import { FaSearch } from "react-icons/fa"
-import { useDispatch } from "react-redux"
-import { setCurrentUser } from "../redux/appSlice"
+import { useDispatch, useSelector } from "react-redux"
+import { filterProducts, setCurrentUser, setProducts } from "../redux/appSlice"
 import { toast } from "react-toastify"
+import { RootState } from "../redux/store"
+import productService from "../services/ProductService"
+import { AxiosResponse } from "axios"
+import { ProductType } from "../types/Types"
 
 export const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const logout = () => {
     localStorage.removeItem("currentUser")
     dispatch(setCurrentUser(null))
     navigate("/login")
     toast.success("Çıkış yapıldı")
+  }
+
+  const handleFilter = async (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const value = e.target.value
+    try {
+      if (value) {
+        dispatch(filterProducts(value))
+      } else {
+        const response: ProductType[] = await productService.getAllProducts()
+        dispatch(setProducts(response))
+      }
+    } catch (error) {
+      toast.error("Bir hata oluştu")
+    }
   }
   return (
     <div>
@@ -33,6 +52,7 @@ export const Navbar = () => {
             Endless
           </Typography>
           <TextField
+            onChange={handleFilter}
             sx={{ width: "250px", borderRadius: "5px" }}
             id='searchInput'
             placeholder='Bir şey ara...'
