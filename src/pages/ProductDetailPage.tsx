@@ -1,6 +1,6 @@
 import { Button, Container } from "@mui/material"
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { setLoading } from "../redux/appSlice"
 import { toast } from "react-toastify"
@@ -8,6 +8,7 @@ import productService from "../services/ProductService"
 import { ProductType } from "../types/Types"
 import { FaCirclePlus } from "react-icons/fa6"
 import { FaCircleMinus } from "react-icons/fa6"
+import { addProductToBasket } from "../redux/basketSlice"
 export const ProductDetailPage = () => {
   const { productId } = useParams()
   const dispatch = useDispatch()
@@ -29,6 +30,16 @@ export const ProductDetailPage = () => {
       dispatch(setLoading(false))
     }
   }
+
+  const handleAddProductToBasket = () => {
+    if (product) {
+      const payload: ProductType = {
+        ...product,
+        count: count,
+      }
+      dispatch(addProductToBasket(payload))
+    }
+  }
   return (
     <Container maxWidth='lg'>
       {product && (
@@ -44,12 +55,31 @@ export const ProductDetailPage = () => {
               <div style={{ marginTop: "30px" }}>
                 <FaCirclePlus onClick={() => setCount(count + 1)} style={{ fontSize: "20px", cursor: "pointer", marginRight: "10px", color: "#342823" }} />
                 <span style={{ fontSize: "30px" }}>{count}</span>
-                <FaCircleMinus onClick={() => setCount(count - 1)} style={{ fontSize: "20px", cursor: "pointer", marginLeft: "10px", color: "#342823" }} />
+                {count > 0 ? (
+                  <FaCircleMinus onClick={() => setCount(count - 1)} style={{ fontSize: "20px", cursor: "pointer", marginLeft: "10px", color: "#342823" }} />
+                ) : (
+                  <FaCircleMinus style={{ fontSize: "20px", cursor: "pointer", marginLeft: "10px", color: "#342823" }} />
+                )}
               </div>
               <div>
-                <Button size='small' variant='contained' style={{ marginTop: "20px", backgroundColor: "#A3897A", color: "#342823", textTransform: "none", fontWeight: "bold" }}>
-                  Sepete Ekle
-                </Button>
+                {count > 0 ? (
+                  <Button
+                    onClick={handleAddProductToBasket}
+                    size='small'
+                    variant='contained'
+                    style={{ marginTop: "20px", backgroundColor: "#A3897A", color: "#342823", textTransform: "none", fontWeight: "bold" }}>
+                    Sepete Ekle
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleAddProductToBasket}
+                    disabled={true}
+                    size='small'
+                    variant='contained'
+                    style={{ marginTop: "20px", backgroundColor: "#A3897A", color: "#342823", textTransform: "none", fontWeight: "bold" }}>
+                    Sepete Ekle
+                  </Button>
+                )}
               </div>
             </div>
           </div>
