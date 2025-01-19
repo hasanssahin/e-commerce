@@ -23,6 +23,7 @@ export const appSlice = createSlice({
     },
     setCurrentUser: (state: AppSliceType, action: PayloadAction<UserType | null>) => {
       state.currentUser = action.payload
+      localStorage.setItem("currentUser", JSON.stringify(action.payload))
     },
     setProducts: (state: AppSliceType, action: PayloadAction<ProductType[]>) => {
       state.products = action.payload

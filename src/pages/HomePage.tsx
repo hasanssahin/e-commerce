@@ -6,7 +6,6 @@ import productService from "../services/ProductService"
 import { toast } from "react-toastify"
 import { RootState } from "../redux/store"
 import { ProductCard } from "../components/ProductCard"
-import { Navbar } from "../components/Navbar"
 import { Category } from "../components/Category"
 import { Container } from "@mui/material"
 

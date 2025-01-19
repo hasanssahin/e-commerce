@@ -29,7 +29,6 @@ export const LoginPage = () => {
       if (response) {
         toast.success("Login Successful")
         dispatch(setCurrentUser(response))
-        localStorage.setItem("currentUser", JSON.stringify(response))
         navigate("/")
       } else {
         toast.error("Login Failed")
